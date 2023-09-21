@@ -6,16 +6,24 @@ let divide = (a,b) => a / b;
 let numberA = 0;
 let numberB = 0;
 let operator = "";
+let typedValue = []; //array typed values to let the user input sequence of numbers
 
 let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
         add(numberA, numberB);
+        return add(numberA, numberB)
+
     } else if (operator == "-") {
         subtract(numberA, numberB);
+        return subtract(numberA, numberB)
+
     } else if (operator == "*") {
         multiply(numberA, numberB);
+        return multiply(numberA, numberB)
+
     } else if (operator == "/") {
         divide(numberA, numberB)
+        return divide(numberA, numberB)
     }
 }
 
@@ -43,10 +51,12 @@ btn0.addEventListener("click", () => {
 
 btn1.addEventListener("click", () => {
     display.innerHTML += "1";
+    typedValue.push(1);
 });
 
 btn2.addEventListener("click", () => {
     display.innerHTML += "2";
+    typedValue.push(2);
 });
 
 btn3.addEventListener("click", () => {
@@ -77,8 +87,16 @@ btn9.addEventListener("click", () => {
     display.innerHTML += "9";
 });
 
+//
+
+
+
 btnAdd.addEventListener("click", () => {
-    display.innerHTML += "+";
+    operator = "+";
+    numberA = typedValue.join(""); //concatenate all the numbers in the array to become the value of numberA
+    display.innerHTML = numberA;
+    
+    console.log(numberA);
 });
 
 btnSubtract.addEventListener("click", () => {
@@ -93,12 +111,17 @@ btnDivide.addEventListener("click", () => {
     display.innerHTML += "/";
 });
 
+//
+
 btnEqual.addEventListener("click", () => {
-    display.innerHTML += "=";
+    numberB = typedValue.join("");
+    display.innerHTML = "";
+    display.innerHTML += operate(+numberA, operator, +numberB);
+    typedValue = [];
 });
 
 btnC.addEventListener("click", () => {
-    display.innerHTML += "C";
+    display.innerHTML = "";
 });
 
-console.log(operate(1,"+",1));
+//checkpoint: I was trying to make the numberA value disappear on the display right after I type another value (numberB in this case)
