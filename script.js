@@ -50,8 +50,12 @@ btn0.addEventListener("click", () => {
 });
 
 btn1.addEventListener("click", () => {
+    //if () {
+    //    display.innerHTML = "";
+    //}
+
     display.innerHTML += "1";
-    typedValue.push(1);
+    typedValue.push(1); 
 });
 
 btn2.addEventListener("click", () => {
@@ -94,9 +98,10 @@ btn9.addEventListener("click", () => {
 btnAdd.addEventListener("click", () => {
     operator = "+";
     numberA = typedValue.join(""); //concatenate all the numbers in the array to become the value of numberA
-    display.innerHTML = numberA;
-    
+    display.innerHTML = "";
     console.log(numberA);
+    typedValue = [];
+    display.innerHTML += operate(+numberA, operator, +numberB);
 });
 
 btnSubtract.addEventListener("click", () => {
@@ -118,6 +123,8 @@ btnEqual.addEventListener("click", () => {
     display.innerHTML = "";
     display.innerHTML += operate(+numberA, operator, +numberB);
     typedValue = [];
+
+    console.log(operate(+numberA, operator, +numberB));
 });
 
 btnC.addEventListener("click", () => {
@@ -125,3 +132,6 @@ btnC.addEventListener("click", () => {
 });
 
 //checkpoint: I was trying to make the numberA value disappear on the display right after I type another value (numberB in this case)
+//checkpoint2: I'll create a second line on the display that will store the previous number's value. I guess...
+
+
