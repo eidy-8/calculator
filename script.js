@@ -6,8 +6,8 @@ let divide = (a,b) => a / b;
 let numberA = 0;
 let numberB = 0;
 let operator = "";
-let typedValue = []; //array typed values to let the user input sequence of numbers
-
+let typedValue = [];
+//
 let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
         add(numberA, numberB);
@@ -27,6 +27,22 @@ let operate = (numberA, operator, numberB) => {
     }
 }
 
+function performOperation() {
+    if (numberA && typedValue.length > 0) {
+        numberB = typedValue.join("");
+        display.innerHTML = "";
+        const result = operate(+numberA, operator, +numberB);
+        display.innerHTML += result;
+        numberA = result;
+        typedValue = [];
+    } else {
+        numberA = typedValue.join("");
+        display.innerHTML = "";
+        typedValue = [];
+    }
+    display.innerHTML += operator;
+}
+//
 const display = document.querySelector(".display");
 const btn0 = document.querySelector("#btn0");
 const btn1 = document.querySelector("#btn1");
@@ -44,16 +60,13 @@ const btnMultiply = document.querySelector("#btnMultiply");
 const btnDivide = document.querySelector("#btnDivide");
 const btnEqual = document.querySelector("#btnEqual");
 const btnC = document.querySelector("#btnC");
-
+//
 btn0.addEventListener("click", () => {
     display.innerHTML += "0";
+    typedValue.push(0); 
 });
 
 btn1.addEventListener("click", () => {
-    //if () {
-    //    display.innerHTML = "";
-    //}
-
     display.innerHTML += "1";
     typedValue.push(1); 
 });
@@ -65,73 +78,75 @@ btn2.addEventListener("click", () => {
 
 btn3.addEventListener("click", () => {
     display.innerHTML += "3";
+    typedValue.push(3); 
 });
 
 btn4.addEventListener("click", () => {
     display.innerHTML += "4";
+    typedValue.push(4); 
 });
 
 btn5.addEventListener("click", () => {
     display.innerHTML += "5";
+    typedValue.push(5); 
 });
 
 btn6.addEventListener("click", () => {
     display.innerHTML += "6";
+    typedValue.push(6); 
 });
 
 btn7.addEventListener("click", () => {
     display.innerHTML += "7";
+    typedValue.push(7); 
 });
 
 btn8.addEventListener("click", () => {
     display.innerHTML += "8";
+    typedValue.push(8); 
 });
 
 btn9.addEventListener("click", () => {
     display.innerHTML += "9";
+    typedValue.push(9); 
 });
-
 //
-
-
-
 btnAdd.addEventListener("click", () => {
     operator = "+";
-    numberA = typedValue.join(""); //concatenate all the numbers in the array to become the value of numberA
-    display.innerHTML = "";
-    console.log(numberA);
-    typedValue = [];
-    display.innerHTML += operate(+numberA, operator, +numberB);
+    performOperation();
 });
 
 btnSubtract.addEventListener("click", () => {
-    display.innerHTML += "-";
+    operator = "-";
+    performOperation();
 });
 
 btnMultiply.addEventListener("click", () => {
-    display.innerHTML += "*";
+    operator = "*";
+    performOperation();
 });
 
 btnDivide.addEventListener("click", () => {
-    display.innerHTML += "/";
+    operator = "/";
+    performOperation();
 });
-
 //
-
 btnEqual.addEventListener("click", () => {
     numberB = typedValue.join("");
     display.innerHTML = "";
-    display.innerHTML += operate(+numberA, operator, +numberB);
-    typedValue = [];
+    const result = operate(+numberA, operator, +numberB);
+    display.innerHTML += result;
+    numberA = result;
 
-    console.log(operate(+numberA, operator, +numberB));
+    console.log(numberA);
 });
 
 btnC.addEventListener("click", () => {
+    numberA = 0;
+    numberB = 0;
+    operator = "";
+    typedValue = [];
     display.innerHTML = "";
 });
 
-//checkpoint: I was trying to make the numberA value disappear on the display right after I type another value (numberB in this case)
-//checkpoint2: I'll create a second line on the display that will store the previous number's value. I guess...
-
-
+//checkpoint: the numberA has to be the result value when I sum two values then subtract to a numberB.
