@@ -6,7 +6,10 @@ let divide = (a,b) => a / b;
 let numberA = 0;
 let numberB = 0;
 let operator = "";
+let previousOperator = "";
+let currentOperator = "";
 let typedValue = [];
+let result = 0;
 //
 let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
@@ -28,12 +31,24 @@ let operate = (numberA, operator, numberB) => {
 }
 
 function performOperation() {
-    if (numberA && typedValue.length > 0) {
+    currentOperator = operator;
+    if (numberA && typedValue.length > 0) { //if numberA and typedValue are declared, calculate the values first:
+        operator = previousOperator;
         numberB = typedValue.join("");
         display.innerHTML = "";
-        const result = operate(+numberA, operator, +numberB);
+        let result = operate(+numberA, operator, +numberB);
         display.innerHTML += result;
         numberA = result;
+        numberB = 0;
+        typedValue = [];
+        operator = currentOperator;
+    } else if (numberA || typedValue.length > 0) {
+        numberB = typedValue.join("");
+        display.innerHTML = "";
+        let result = operate(+numberA, operator, +numberB);
+        display.innerHTML += result;
+        numberA = result;
+        numberB = 0;
         typedValue = [];
     } else {
         numberA = typedValue.join("");
@@ -41,6 +56,13 @@ function performOperation() {
         typedValue = [];
     }
     display.innerHTML += operator;
+    previousOperator = operator;
+
+    console.log(`numberA: ${numberA} inside the performOperation`);
+    console.log(`numberB: ${numberB} inside the performOperation`);
+    console.log(`result: ${result} inside the performOperation`);
+    console.log(`operator: ${operator} inside the performOperation`);
+    console.log("------------------------------------------------");
 }
 //
 const display = document.querySelector(".display");
@@ -134,11 +156,16 @@ btnDivide.addEventListener("click", () => {
 btnEqual.addEventListener("click", () => {
     numberB = typedValue.join("");
     display.innerHTML = "";
-    const result = operate(+numberA, operator, +numberB);
+    let result = operate(+numberA, operator, +numberB);
     display.innerHTML += result;
     numberA = result;
+    numberB = 0;
+    typedValue = [];
 
-    console.log(numberA);
+    console.log(`numberA: ${numberA} inside the equal`);
+    console.log(`numberB: ${numberB} inside the equal`);
+    console.log(`result: ${result} inside the equal`);
+    console.log("------------------------------------------------");
 });
 
 btnC.addEventListener("click", () => {
@@ -149,4 +176,4 @@ btnC.addEventListener("click", () => {
     display.innerHTML = "";
 });
 
-//checkpoint: the numberA has to be the result value when I sum two values then subtract to a numberB.
+//checkpoint: when typing the operators after typing a number, there is a weird behavior on the display.
