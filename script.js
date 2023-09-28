@@ -13,24 +13,23 @@ let result = 0;
 //
 let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
-        add(numberA, numberB);
         return add(numberA, numberB)
-
     } else if (operator == "-") {
-        subtract(numberA, numberB);
+        console.log(subtract(numberA, numberB));
         return subtract(numberA, numberB)
-
     } else if (operator == "*") {
-        multiply(numberA, numberB);
         return multiply(numberA, numberB)
-
     } else if (operator == "/") {
-        divide(numberA, numberB)
         return divide(numberA, numberB)
     }
 }
 
 function performOperation() {
+
+    console.log(`typerValue: ${typedValue.length} inside the performOperation`);
+    console.log(`numberA: ${numberA} inside the performOperation`);
+    console.log("------------------------------------------------");
+
     currentOperator = operator;
     if (numberA && typedValue.length > 0) { //if numberA and typedValue are declared, calculate the values first:
         operator = previousOperator;
@@ -40,19 +39,22 @@ function performOperation() {
         display.innerHTML += result;
         numberA = result;
         numberB = 0;
-        typedValue = [];
         operator = currentOperator;
-    } else if (numberA || typedValue.length > 0) {
-        numberB = typedValue.join("");
+        typedValue = [];
+    } else {
+        if (numberA == 0) {
+            numberA = typedValue.join("");
+        }        
         display.innerHTML = "";
+
+        if (operator == "*" || operator == "/") {
+            numberB = 1;
+        }
+
         let result = operate(+numberA, operator, +numberB);
         display.innerHTML += result;
         numberA = result;
         numberB = 0;
-        typedValue = [];
-    } else {
-        numberA = typedValue.join("");
-        display.innerHTML = "";
         typedValue = [];
     }
     display.innerHTML += operator;
@@ -154,6 +156,8 @@ btnDivide.addEventListener("click", () => {
 });
 //
 btnEqual.addEventListener("click", () => {
+
+    if (typedValue.length > 0) {
     numberB = typedValue.join("");
     display.innerHTML = "";
     let result = operate(+numberA, operator, +numberB);
@@ -161,6 +165,11 @@ btnEqual.addEventListener("click", () => {
     numberA = result;
     numberB = 0;
     typedValue = [];
+    } else {
+        numberA = typedValue.join("");
+        display.innerHTML = numberA;
+        typedValue = [];
+    }
 
     console.log(`numberA: ${numberA} inside the equal`);
     console.log(`numberB: ${numberB} inside the equal`);
@@ -176,4 +185,4 @@ btnC.addEventListener("click", () => {
     display.innerHTML = "";
 });
 
-//checkpoint: when typing the operators after typing a number, there is a weird behavior on the display.
+//checkpoint: let the user type a negative value first as follows: (-7 + 1 =)
