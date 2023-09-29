@@ -31,9 +31,19 @@ function performOperation() {
     console.log("------------------------------------------------");
 
     currentOperator = operator;
-    if (numberA && typedValue.length > 0) { //if numberA and typedValue are declared, calculate the values first:
-        operator = previousOperator;
+    if (typedValue.length > 0) {
+        if (previousOperator != "") {
+            operator = previousOperator;
+        }
         numberB = typedValue.join("");
+
+        if (operator == "*") {
+            numberA = 1;
+        } else if (operator == "/") {
+            numberA = numberB * numberB;
+            console.log(numberA);
+        }
+
         display.innerHTML = "";
         let result = operate(+numberA, operator, +numberB);
         display.innerHTML += result;
@@ -49,7 +59,7 @@ function performOperation() {
 
         if (operator == "*" || operator == "/") {
             numberB = 1;
-        }
+        } 
 
         let result = operate(+numberA, operator, +numberB);
         display.innerHTML += result;
@@ -156,15 +166,24 @@ btnDivide.addEventListener("click", () => {
 });
 //
 btnEqual.addEventListener("click", () => {
+    console.log(`typerValue: ${typedValue.length} inside the performOperation`);
+    console.log(`numberA: ${numberA} inside the performOperation`);
+    console.log("------------------------------------------------");
 
     if (typedValue.length > 0) {
-    numberB = typedValue.join("");
-    display.innerHTML = "";
-    let result = operate(+numberA, operator, +numberB);
-    display.innerHTML += result;
-    numberA = result;
-    numberB = 0;
-    typedValue = [];
+        numberB = typedValue.join("");
+        display.innerHTML = "";
+        
+        if (operator == "") {
+            operator = "+";
+            console.log(operator);
+        }
+
+        let result = operate(+numberA, operator, +numberB);
+        display.innerHTML += result;
+        numberA = result;
+        numberB = 0;
+        typedValue = [];
     } else {
         numberA = typedValue.join("");
         display.innerHTML = numberA;
@@ -185,4 +204,4 @@ btnC.addEventListener("click", () => {
     display.innerHTML = "";
 });
 
-//checkpoint: let the user type a negative value first as follows: (-7 + 1 =)
+//checkpoint: divide and multiply are not working properly. The input (12/12*) returns (12*) instead of (1*)
