@@ -21,7 +21,7 @@ let operate = (numberA, operator, numberB) => {
         return multiply(numberA, numberB)
     } else if (operator == "/") {
         return divide(numberA, numberB)
-    }
+    } 
 }
 
 function performOperation() {
@@ -31,27 +31,38 @@ function performOperation() {
     console.log("------------------------------------------------");
 
     currentOperator = operator;
-    if (typedValue.length > 0) {
-        if (previousOperator != "") {
+    if (typedValue.length > 0) { //if any value was declared on typedValue then it means that it has to correctly calculate with the first operator and then input the next operator.
+        if (previousOperator != "") { //
             operator = previousOperator;
         }
-        numberB = typedValue.join("");
+        numberB = typedValue.join(""); //it will concatenate all the number inputted by the user and it will turn into a string
 
-        if (operator == "*") {
+        if (operator == "*" && numberA == 0) { //as the numberB was already declared those conditions were made to make sure that numberA "neutralize" numberB. E.g. If I type (12*) the result would be (0*).
             numberA = 1;
-        } else if (operator == "/") {
+        } else if (operator == "/" && numberA == 0) {
             numberA = numberB * numberB;
             console.log(numberA);
+        } else if (operator == "-" && numberA == 0) {
+            numberA = numberB * 2;
         }
 
         display.innerHTML = "";
-        let result = operate(+numberA, operator, +numberB);
+        console.log(numberA, numberB);
+        let result = operate(+numberA, operator, +numberB); //this function will correctly operate the values transforming strings to numbers
+        result = roundToThreeDecimals(result);
         display.innerHTML += result;
+
+        if (operator == "/" && numberB == 0) {
+            display.innerHTML = "";
+            display.innerHTML = "YOU CANNOT DO IT MATE";
+        }
+
+        console.log(result);
         numberA = result;
         numberB = 0;
         operator = currentOperator;
         typedValue = [];
-    } else {
+    } else { //if 
         if (numberA == 0) {
             numberA = typedValue.join("");
         }        
@@ -76,6 +87,14 @@ function performOperation() {
     console.log(`operator: ${operator} inside the performOperation`);
     console.log("------------------------------------------------");
 }
+
+function roundToThreeDecimals(result) {
+    if (Number.isFinite(result) && !Number.isInteger(result)) {
+      return parseFloat(result.toFixed(3));
+    } else {
+      return result;
+    }
+  }
 //
 const display = document.querySelector(".display");
 const btn0 = document.querySelector("#btn0");
@@ -180,7 +199,14 @@ btnEqual.addEventListener("click", () => {
         }
 
         let result = operate(+numberA, operator, +numberB);
+        result = roundToThreeDecimals(result);
         display.innerHTML += result;
+
+        if (operator == "/" && numberB == 0) {
+            display.innerHTML = "";
+            display.innerHTML = "CAN'T DO IT MATE";
+        }
+
         numberA = result;
         numberB = 0;
         typedValue = [];
@@ -204,4 +230,4 @@ btnC.addEventListener("click", () => {
     display.innerHTML = "";
 });
 
-//checkpoint: divide and multiply are not working properly. The input (12/12*) returns (12*) instead of (1*)
+//checkpoint: (0-5+) returns (5+)
