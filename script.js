@@ -15,7 +15,6 @@ let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
         return add(numberA, numberB)
     } else if (operator == "-") {
-        console.log(subtract(numberA, numberB));
         return subtract(numberA, numberB)
     } else if (operator == "*") {
         return multiply(numberA, numberB)
@@ -25,22 +24,15 @@ let operate = (numberA, operator, numberB) => {
 }
 
 function performOperation() {
-
-    console.log(`typerValue: ${typedValue.length} inside the performOperation`);
-    console.log(`numberA: ${numberA} inside the performOperation`);
-    console.log(`numberB: ${numberB} inside the performOperation`);
-    console.log("------------------------------------------------");
-
     currentOperator = operator;
-    if (typedValue.length > 0 && numberA != 0) { //if any value was declared on typedValue then it means that it has to correctly calculate with the first operator and then input the next operator.
+    if (typedValue.length > 0 && numberA != 0) { 
         if (previousOperator != "") { 
             operator = previousOperator;
         }
-        numberB = typedValue.join(""); //it will concatenate all the number inputted by the user and it will turn into a string
+        numberB = typedValue.join(""); 
 
         display.innerHTML = "";
-        console.log(numberA, numberB);
-        let result = operate(+numberA, operator, +numberB); //this function will correctly operate the values transforming strings to numbers
+        let result = operate(+numberA, operator, +numberB); 
         result = roundToThreeDecimals(result);
         display.innerHTML += result;
 
@@ -49,7 +41,6 @@ function performOperation() {
             display.innerHTML = "YOU CANNOT DO IT MATE";
         }
 
-        console.log(result);
         numberA = result;
         numberB = 0;
         operator = currentOperator;
@@ -60,12 +51,10 @@ function performOperation() {
         }        
         display.innerHTML = "";
 
-        //"here's the problem"
-        if (operator == "*" && numberA == 0) { //as the numberB was already declared those conditions were made to make sure that numberA "neutralize" numberB. E.g. If I type (12*) the result would be (0*).
+        if (operator == "*" && numberA == 0) { 
             numberA = 1;
         } else if (operator == "/" && numberA == 0) {
             numberA = numberB * numberB;
-            console.log(numberA);
         } else if (operator == "-" && numberA == 0) {
             numberB = -numberB; 
         }
@@ -78,12 +67,6 @@ function performOperation() {
     }
     display.innerHTML += operator;
     previousOperator = operator;
-
-    console.log(`numberA: ${numberA} inside the performOperation`);
-    console.log(`numberB: ${numberB} inside the performOperation`);
-    console.log(`result: ${result} inside the performOperation`);
-    console.log(`operator: ${operator} inside the performOperation`);
-    console.log("------------------------------------------------");
 }
 
 function roundToThreeDecimals(result) {
@@ -93,7 +76,7 @@ function roundToThreeDecimals(result) {
       return result;
     }
   }
-//
+
 const display = document.querySelector(".display");
 const btn0 = document.querySelector("#btn0");
 const btn1 = document.querySelector("#btn1");
@@ -111,7 +94,7 @@ const btnMultiply = document.querySelector("#btnMultiply");
 const btnDivide = document.querySelector("#btnDivide");
 const btnEqual = document.querySelector("#btnEqual");
 const btnC = document.querySelector("#btnC");
-//
+
 btn0.addEventListener("click", () => {
     display.innerHTML += "0";
     typedValue.push(0); 
@@ -183,9 +166,6 @@ btnDivide.addEventListener("click", () => {
 });
 //
 btnEqual.addEventListener("click", () => {
-    console.log(`typerValue: ${typedValue.length} inside the performOperation`);
-    console.log(`numberA: ${numberA} inside the performOperation`);
-    console.log("------------------------------------------------");
 
     if (typedValue.length > 0) {
         numberB = typedValue.join("");
@@ -193,7 +173,6 @@ btnEqual.addEventListener("click", () => {
         
         if (operator == "") {
             operator = "+";
-            console.log(operator);
         }
 
         let result = operate(+numberA, operator, +numberB);
@@ -213,11 +192,6 @@ btnEqual.addEventListener("click", () => {
         display.innerHTML = numberA;
         typedValue = [];
     }
-
-    console.log(`numberA: ${numberA} inside the equal`);
-    console.log(`numberB: ${numberB} inside the equal`);
-    console.log(`result: ${result} inside the equal`);
-    console.log("------------------------------------------------");
 });
 
 btnC.addEventListener("click", () => {
@@ -227,5 +201,3 @@ btnC.addEventListener("click", () => {
     typedValue = [];
     display.innerHTML = "";
 });
-
-//checkpoint: (0-5+) returns (5+)
