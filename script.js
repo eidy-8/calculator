@@ -10,6 +10,7 @@ let previousOperator = "";
 let currentOperator = "";
 let typedValue = [];
 let result = 0;
+let isDeclared = false;
 
 let operate = (numberA, operator, numberB) => {
     if (operator == "+") {
@@ -25,7 +26,7 @@ let operate = (numberA, operator, numberB) => {
 
 function performOperation() {
     currentOperator = operator;
-    if (typedValue.length > 0 && numberA != 0) { 
+    if (typedValue.length > 0 && isDeclared === true) { 
         if (previousOperator != "") { 
             operator = previousOperator;
         }
@@ -36,34 +37,30 @@ function performOperation() {
         result = roundToThreeDecimals(result);
         display.innerHTML += result;
 
+        if (operator == "/" && numberA == 0) {
+            display.innerHTML = "";
+            display.innerHTML = "CAN'T DO IT MATE";
+        }
         if (operator == "/" && numberB == 0) {
             display.innerHTML = "";
-            display.innerHTML = "YOU CANNOT DO IT MATE";
+            display.innerHTML = "CAN'T DO IT MATE";
         }
 
         numberA = result;
         numberB = 0;
         operator = currentOperator;
         typedValue = [];
+
     } else {
         if (numberA == 0) {
             numberA = typedValue.join("");
-        }        
+        }     
+
         display.innerHTML = "";
-
-        if (operator == "*" && numberA == 0) { 
-            numberA = 1;
-        } else if (operator == "/" && numberA == 0) {
-            numberA = numberB * numberB;
-        } else if (operator == "-" && numberA == 0) {
-            numberB = -numberB; 
-        }
-
-        let result = operate(+numberA, operator, +numberB);
-        display.innerHTML += result;
-        numberA = result;
-        numberB = 0;
+        display.innerHTML += numberA;
+        operator = currentOperator;
         typedValue = [];
+        isDeclared = true;
     }
     display.innerHTML += operator;
     previousOperator = operator;
@@ -179,6 +176,10 @@ btnEqual.addEventListener("click", () => {
         result = roundToThreeDecimals(result);
         display.innerHTML += result;
 
+        if (operator == "/" && numberA == 0) {
+            display.innerHTML = "";
+            display.innerHTML = "CAN'T DO IT MATE";
+        }
         if (operator == "/" && numberB == 0) {
             display.innerHTML = "";
             display.innerHTML = "CAN'T DO IT MATE";
