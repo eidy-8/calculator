@@ -91,6 +91,8 @@ const btnMultiply = document.querySelector("#btnMultiply");
 const btnDivide = document.querySelector("#btnDivide");
 const btnEqual = document.querySelector("#btnEqual");
 const btnC = document.querySelector("#btnC");
+const btnPoint = document.querySelector("#btnPoint");
+const btnDel = document.querySelector("#btnDel");
 
 btn0.addEventListener("click", () => {
     display.innerHTML += "0";
@@ -201,4 +203,17 @@ btnC.addEventListener("click", () => {
     operator = "";
     typedValue = [];
     display.innerHTML = "";
+});
+
+btnPoint.addEventListener("click", () => {
+    for (let i = 0; i < typedValue.length; i++) {
+        if (typedValue[i] != ".") {
+            display.innerHTML += ".";
+            typedValue.push(".");
+        }
+    } 
+});
+
+btnDel.addEventListener("click", () => {
+    
 });
